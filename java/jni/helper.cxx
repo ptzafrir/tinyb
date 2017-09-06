@@ -191,6 +191,7 @@ jobject get_bluetooth_type(JNIEnv *env, const char *field_name)
     jfieldID b_type_field = search_field(env, b_type_enum, field_name, "l", true);
 
     jobject result = env->GetStaticObjectField(b_type_enum, b_type_field);
+    env->DeleteLocalRef(b_type_enum);
     return result;
 }
 
@@ -200,6 +201,7 @@ jobject get_new_arraylist(JNIEnv *env, unsigned int size, jmethodID *add)
     jmethodID arraylist_ctor = search_method(env, arraylist_class, "<init>", "(I)V", false);
 
     jobject result = env->NewObject(arraylist_class, arraylist_ctor, size);
+    env->DeleteLocalRef(b_type_enum);
     if (!result)
     {
         throw std::runtime_error("cannot create instance of class\n");
